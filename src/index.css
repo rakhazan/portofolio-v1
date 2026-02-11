@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Mulish", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-outfit: "Outfit", sans-serif;
+
+  --color-background: var(--background);
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+}
+
+/* Purple Theme (v1) */
+[data-theme="purple"] {
+  --background: #44344f;
+  --accent: #c2f970;
+  --accent-secondary: #98a6d4;
+
+  --bg-color: var(--background);
+  --card-bg: rgba(86, 77, 128, 0.1);
+  --card-border: rgba(152, 166, 212, 0.15);
+  --text-primary: #d3fcd5;
+  --text-secondary: rgba(152, 166, 212, 0.6);
+}
+
+/* Navy Theme (v2 - Ocean & Ember) */
+[data-theme="navy"] {
+  --background: #293241;
+  --accent: #ee6c4d;
+  --accent-secondary: #98c1d9;
+
+  --bg-color: var(--background);
+  --card-bg: rgba(61, 90, 128, 0.1);
+  --card-border: rgba(152, 193, 217, 0.15);
+  --text-primary: #e0fbfc;
+  --text-secondary: rgba(152, 193, 217, 0.6);
+}
+
+/* Azure Slate Theme (v3) */
+[data-theme="slate"] {
+  --background: #131b23;
+  --accent: #2274a5;
+  --accent-secondary: #e7dfc6;
+
+  --bg-color: var(--background);
+  --card-bg: rgba(34, 116, 165, 0.1);
+  --card-border: rgba(231, 223, 198, 0.15);
+  --text-primary: #e9f1f7;
+  --text-secondary: rgba(231, 223, 198, 0.6);
+}
+
+:root {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  font-weight: 400;
+  color-scheme: dark;
+  color: var(--text-primary);
+  background-color: var(--bg-color);
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  body {
+    @apply m-0 p-0 min-h-screen overflow-x-hidden bg-[var(--bg-color)];
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        circle at 2px 2px,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 0
+      );
+    background-size:
+      40px 40px,
+      40px 40px,
+      20px 20px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-outfit tracking-[-0.02em];
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-[6px];
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-[var(--bg-color)];
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-[var(--card-border)] rounded-[10px];
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-[var(--text-secondary)];
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-[var(--card-bg)] border border-[var(--card-border)] backdrop-blur-[12px] rounded-[16px];
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--text-primary) 0%,
+      var(--text-secondary) 100%
+    );
+    @apply bg-clip-text text-transparent;
+  }
+
+  .accent-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--accent) 0%,
+      var(--accent-secondary) 100%
+    );
+    @apply bg-clip-text text-transparent;
+  }
+}
