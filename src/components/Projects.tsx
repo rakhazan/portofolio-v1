@@ -7,102 +7,82 @@ import {
   ArrowRight01Icon,
   Cancel01Icon,
 } from "hugeicons-react";
+import { useTranslation } from "react-i18next";
 
 const SECTION_PADDING = "px-6 py-20 md:px-20 lg:px-40";
 
 interface Project {
-  title: string;
-  desc: string;
-  tech: string[];
+  id: string;
   icon: React.ReactNode;
-  role: string;
-  deepDive: string[];
+  tech: string[];
 }
 
-const PROJECTS: Project[] = [
+const PROJECTS_DATA: Project[] = [
+  { id: "solla", icon: <CodeIcon size={32} />, tech: ["Go", "Fiber", "MySQL"] },
   {
-    title: "Solla POS",
-    desc: "High-performance POS solution with real-time sync engine and robust transactional integrity.",
-    tech: ["Go", "Fiber", "MySQL"],
-    icon: <CodeIcon size={32} />,
-    role: "Backend Developer",
-    deepDive: [
-      "Designed and implemented a robust synchronization engine that keeps data consistent between local POS terminals and a centralized cloud server.",
-      "Ensured offline functionality with a sophisticated conflict-resolution strategy.",
-      "Optimized complex SQL queries and database indexes to handle high-frequency transaction logging and real-time report generation.",
-    ],
-  },
-  {
-    title: "Skallr Platform",
-    desc: "A scalable ecosystem with JWT authentication and worker-based background processing.",
-    tech: ["Go", "JWT", "Postman"],
+    id: "skallr",
     icon: <UserAccountIcon size={32} />,
-    role: "Backend Developer",
-    deepDive: [
-      "Built a secure user activation system utilizing expiration-aware JWT tokens and a dedicated mailer service.",
-      "Developed a worker-based background processing system to offload long-running tasks like analytics aggregation and batch notifications.",
-      "Integrated with the Notion API to bridge the gap between internal documentation and real-time platform updates.",
-    ],
+    tech: ["Go", "JWT", "Postman"],
   },
   {
-    title: "Sarana Gedung",
-    desc: "Premium storefront featuring 3D rendering with Three.js and asymmetrical layouts.",
-    tech: ["React", "Three.js", "Motion"],
+    id: "building",
     icon: <Cursor01Icon size={32} />,
-    role: "Senior Frontend Engineer",
-    deepDive: [
-      "Implemented a custom 3D rendering pipeline using Three.js to showcase building maintenance services in an interactive environment.",
-      "Designed an asymmetrical 'Bento Grid' layout that remains fully responsive using Framer Motion for staggered entrance animations.",
-      "Conducted a full accessibility audit (ARIA roles, focus management) to ensure high-end design remained usable for all potential clients.",
-    ],
+    tech: ["React", "Three.js", "Motion"],
   },
   {
-    title: "SISMART",
-    desc: "Enterprise IoT translator bridge for smart city physical sensor and physical data streams.",
-    tech: ["Go", "Fiber", "MQTT"],
+    id: "iot",
     icon: <CodeIcon size={32} />,
-    role: "Backend Developer",
-    deepDive: [
-      "Developed a modular adapter pattern allowing rapid integration of new smart device types or payment providers.",
-      "Implemented high-concurrency event handlers to process simultaneous data streams from thousands of IoT devices.",
-      "Maintained a strict clean architecture (hexagonal/onion style) to make the system resilient to infrastructure changes.",
-    ],
+    tech: ["Go", "Next.js", "Prisma"],
   },
 ];
 
 export const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
+    null,
+  );
+  const { t } = useTranslation();
 
   // Lock body scroll when drawer is open
   useEffect(() => {
-    if (selectedProject) {
+    if (selectedProjectId) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-  }, [selectedProject]);
+  }, [selectedProjectId]);
+
+  const selectedProject = selectedProjectId
+    ? {
+        ...PROJECTS_DATA.find((p) => p.id === selectedProjectId)!,
+        title: t(`projects.items.${selectedProjectId}.title`),
+        desc: t(`projects.items.${selectedProjectId}.desc`),
+        role: t(`projects.items.${selectedProjectId}.role`),
+        deepDive: t(`projects.items.${selectedProjectId}.deepDive`, {
+          returnObjects: true,
+        }) as string[],
+      }
+    : null;
 
   return (
     <section id="projects" className={`${SECTION_PADDING} relative`}>
       <div className="mb-16">
         <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
-          Featured <span className="text-accent">Works</span>.
+          {t("projects.title.prefix")}{" "}
+          <span className="text-accent">{t("projects.title.highlight")}</span>.
         </h2>
-        <p className="text-white/40 text-lg">
-          A selection of my best work in backend and frontend engineering.
-        </p>
+        <p className="text-white/40 text-lg">{t("projects.subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {PROJECTS.map((project, i) => (
+        {PROJECTS_DATA.map((project, i) => (
           <motion.div
-            key={project.title}
+            key={project.id}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
             whileHover={{ y: -10 }}
-            onClick={() => setSelectedProject(project)}
+            onClick={() => setSelectedProjectId(project.id)}
             className="glass-card p-8 group relative cursor-pointer"
           >
             <div className="mb-6 inline-block p-4 bg-white/5 rounded-2xl group-hover:bg-accent/10 transition-colors">
@@ -110,22 +90,24 @@ export const Projects = () => {
                 {project.icon}
               </div>
             </div>
-            <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
+            <h3 className="text-2xl font-bold mb-3">
+              {t(`projects.items.${project.id}.title`)}
+            </h3>
             <p className="text-white/50 text-base mb-6 leading-relaxed">
-              {project.desc}
+              {t(`projects.items.${project.id}.desc`)}
             </p>
             <div className="flex flex-wrap gap-2 mb-8">
-              {project.tech.map((t) => (
+              {project.tech.map((techItem) => (
                 <span
-                  key={t}
+                  key={techItem}
                   className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-white/5 rounded-md text-white/40 border border-white/5"
                 >
-                  {t}
+                  {techItem}
                 </span>
               ))}
             </div>
             <div className="flex items-center gap-2 text-sm font-semibold text-white/50 group-hover:text-accent transition-colors">
-              View details <ArrowRight01Icon size={16} />
+              {t("projects.viewDetails")} <ArrowRight01Icon size={16} />
             </div>
           </motion.div>
         ))}
@@ -139,7 +121,7 @@ export const Projects = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setSelectedProject(null)}
+              onClick={() => setSelectedProjectId(null)}
               className="absolute inset-0 bg-black/60 backdrop-blur-md"
             />
 
@@ -153,7 +135,7 @@ export const Projects = () => {
             >
               {/* Close Button */}
               <button
-                onClick={() => setSelectedProject(null)}
+                onClick={() => setSelectedProjectId(null)}
                 className="absolute top-6 right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-white/60 hover:text-white"
               >
                 <Cancel01Icon size={24} />
@@ -175,7 +157,7 @@ export const Projects = () => {
                   <div className="space-y-6">
                     <div>
                       <h4 className="text-xs font-bold uppercase tracking-widest text-white/30 mb-3">
-                        Role
+                        {t("projects.drawer.role")}
                       </h4>
                       <p className="text-white/80 font-medium text-lg">
                         {selectedProject.role}
@@ -183,15 +165,15 @@ export const Projects = () => {
                     </div>
                     <div>
                       <h4 className="text-xs font-bold uppercase tracking-widest text-white/30 mb-3">
-                        Technologies
+                        {t("projects.drawer.tech")}
                       </h4>
                       <div className="flex flex-wrap gap-2">
-                        {selectedProject.tech.map((t) => (
+                        {selectedProject.tech.map((techItem) => (
                           <span
-                            key={t}
+                            key={techItem}
                             className="px-3 py-1.5 bg-accent/10 border border-accent/20 rounded-lg text-accent text-sm font-semibold"
                           >
-                            {t}
+                            {techItem}
                           </span>
                         ))}
                       </div>
@@ -203,7 +185,7 @@ export const Projects = () => {
                 <div className="lg:col-span-7 flex flex-col justify-center">
                   <div className="p-8 md:p-10 bg-white/5 border border-white/10 rounded-3xl">
                     <h4 className="text-xs font-bold uppercase tracking-widest text-white/30 mb-8 border-b border-white/10 pb-4">
-                      Technical Deep-Dive
+                      {t("projects.drawer.deepDive")}
                     </h4>
                     <ul className="space-y-6">
                       {selectedProject.deepDive.map((point, idx) => (

@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export const HeroVisual = () => {
+  const { t } = useTranslation();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -144,7 +146,7 @@ export const HeroVisual = () => {
         >
           <div className="px-4 py-2 glass-card border-accent/30 text-[10px] md:text-xs font-semibold text-accent flex items-center gap-2 whitespace-nowrap shadow-xl">
             <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-            Vibe: Creative Logic
+            {t("hero.visual.vibe")}
           </div>
         </FloatingElement>
 
@@ -156,7 +158,7 @@ export const HeroVisual = () => {
           parallaxFactor={-0.1}
         >
           <div className="px-4 py-2 glass-card border-white/10 text-[10px] md:text-xs font-medium text-white/80 backdrop-blur-md shadow-xl rotate-[-5deg]">
-            Crafting Experiences ⚡️
+            {t("hero.visual.crafting")}
           </div>
         </FloatingElement>
 

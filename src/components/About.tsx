@@ -1,92 +1,102 @@
 import { motion } from "framer-motion";
 import {
-  CodeIcon,
+  Calendar03Icon,
   Location01Icon,
-  UserIcon,
   Briefcase02Icon,
+  CodeIcon,
 } from "hugeicons-react";
 import { cn } from "../lib/utils";
 import profile from "../assets/profile.png";
+import { useTranslation } from "react-i18next";
 
 const SECTION_PADDING = "px-6 py-24 md:px-20 lg:px-40";
 
 export const About = () => {
+  const { t } = useTranslation(); // Added useTranslation hook
+
   return (
-    <section id="about" className={cn(SECTION_PADDING, "bg-white/2 relative")}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-        {/* Left Column: Biography */}
+    <section
+      id="about"
+      className={cn(SECTION_PADDING, "relative bg-slate-950")}
+    >
+      {" "}
+      {/* Updated class */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        {" "}
+        {/* Updated gap and alignment */}
+        {/* Left Column: Story */} {/* Updated comment */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
+          className="space-y-8" // Added space-y-8
         >
-          <div className="flex items-center gap-2 mb-4">
-            <span className="w-12 h-[1px] bg-accent"></span>
-            <span className="text-accent uppercase tracking-[0.2em] text-sm font-semibold">
-              Meet the Architect
+          <div>
+            {" "}
+            {/* New wrapper div */}
+            <span className="text-accent text-xs font-bold uppercase tracking-[0.4em] mb-3 block">
+              {" "}
+              {/* Updated structure and classes */}
+              {t("about.subtitle")} {/* Translated */}
             </span>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6">
+              {" "}
+              {/* Updated classes */}
+              Rakha Zahran Nurfirmansyah<span className="text-accent">
+                .
+              </span>{" "}
+              {/* Updated text */}
+            </h2>
           </div>
-          <h2 className="text-5xl font-bold mb-6 tracking-tight leading-[1.1]">
-            Rakha Zahran <br />
-            <span className="text-accent">Nurfirmansyah</span>.
-          </h2>
-
-          <div className="flex flex-wrap gap-4 mb-8">
-            <div className="flex items-center gap-2 text-white/60 bg-white/5 py-1.5 px-3 rounded-full border border-white/5">
-              <UserIcon size={16} />
-              <span className="text-sm">23 Years Old</span>
+          <div className="flex flex-wrap gap-4">
+            {" "}
+            {/* Updated classes */}
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full glass-card border-white/5 text-sm text-white/60">
+              {" "}
+              {/* Updated classes */}
+              <Calendar03Icon size={16} className="text-accent" />{" "}
+              {t("about.age")} {/* Added icon and translated */}
             </div>
-            <div className="flex items-center gap-2 text-white/60 bg-white/5 py-1.5 px-3 rounded-full border border-white/5">
-              <Location01Icon size={16} />
-              <span className="text-sm">Jakarta, Indonesia</span>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full glass-card border-white/5 text-sm text-white/60">
+              {" "}
+              {/* Updated classes */}
+              <Location01Icon size={16} className="text-accent" />{" "}
+              {t("about.location")} {/* Added icon and translated */}
             </div>
           </div>
-
-          <p className="text-white/70 text-lg mb-8 leading-relaxed max-w-xl">
-            I am a passionate{" "}
-            <strong className="accent-gradient bg-clip-text text-transparent">
-              Fullstack Developer
-            </strong>{" "}
-            with a strong foundation in Informatics Engineering. I dedicate my
-            career to mastering the art of building{" "}
-            <span className="text-accent underline underline-offset-8 decoration-accent/30">
-              scalable, high-performance
-            </span>{" "}
-            web applications and robust backend systems.
-          </p>
-
-          <p className="text-white/50 text-base mb-10 leading-relaxed max-w-xl">
-            Whether it's crafting immersive{" "}
-            <span className="text-accent italic font-semibold">
-              frontend experiences
-            </span>{" "}
-            or architecting complex systems in{" "}
-            <span className="text-accent font-bold">Go</span>, I thrive on
-            solving challenging problems that bridge the gap between user needs
-            and technical possibility.
-          </p>
-
-          <div className="grid grid-cols-2 gap-6 max-w-md">
-            <div className="glass-card p-6 border-l-4 border-l-accent group hover:bg-white/5 transition-all">
-              <h3 className="text-3xl font-bold mb-1 group-hover:text-accent transition-colors">
+          <div className="space-y-6 text-lg text-white/50 leading-relaxed font-light">
+            {" "}
+            {/* Updated classes */}
+            <p>{t("about.bio1")}</p> {/* Translated */}
+            <p>{t("about.bio2")}</p> {/* Translated */}
+          </div>
+          {/* Stats Bento */} {/* New comment */}
+          <div className="grid grid-cols-2 gap-4 pt-4">
+            {" "}
+            {/* Updated classes */}
+            <div className="p-6 glass-card border-white/5">
+              {" "}
+              {/* Updated classes */}
+              <span className="text-3xl font-bold text-white block mb-1">
                 5+
-              </h3>
-              <p className="text-xs text-white/40 uppercase tracking-widest font-semibold">
-                Years of Coding
-              </p>
+              </span>
+              <span className="text-xs text-white/40 uppercase tracking-widest leading-relaxed">
+                {t("about.stats.coding")} {/* Translated */}
+              </span>
             </div>
-            <div className="glass-card p-6 border-l-4 border-l-accent group hover:bg-white/5 transition-all">
-              <h3 className="text-3xl font-bold mb-1 group-hover:text-accent transition-colors">
+            <div className="p-6 glass-card border-white/5">
+              {" "}
+              {/* Updated classes */}
+              <span className="text-3xl font-bold text-white block mb-1">
                 10+
-              </h3>
-              <p className="text-xs text-white/40 uppercase tracking-widest font-semibold">
-                Projects Delivered
-              </p>
+              </span>
+              <span className="text-xs text-white/40 uppercase tracking-widest leading-relaxed">
+                {t("about.stats.projects")} {/* Translated */}
+              </span>
             </div>
           </div>
         </motion.div>
-
         {/* Right Column: Visual & Tech */}
         <div className="space-y-12">
           {/* Profile Photo Container with 3D Interaction */}
@@ -95,7 +105,7 @@ export const About = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative mx-auto lg:mx-0 w-full max-w-[420px]"
+            className="relative mx-auto lg:mx-0 w-full max-w-[420px]" // Updated class
           >
             {/* Ambient Background Glow */}
             <div className="absolute inset-0 bg-accent/20 blur-[100px] rounded-full opacity-40 -z-10 animate-pulse"></div>
@@ -127,14 +137,14 @@ export const About = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <span className="w-8 h-[2px] bg-accent"></span>
                     <span className="text-[10px] text-accent font-bold uppercase tracking-[0.4em]">
-                      Authentic Identity
+                      {t("about.photo.identity")} {/* Translated */}
                     </span>
                   </div>
                   <h4 className="text-xl font-bold text-white tracking-tight">
-                    Software Architect
+                    {t("about.photo.role")} {/* Translated */}
                   </h4>
                   <p className="text-white/40 text-xs font-mono mt-1 uppercase tracking-widest">
-                    ID: RZN-2003
+                    ID: RZN-2002
                   </p>
                 </div>
               </div>
@@ -146,7 +156,7 @@ export const About = () => {
 
               <div className="absolute -bottom-4 -left-4 px-6 py-3 glass-card border-white/10 bg-white/5 backdrop-blur-xl rounded-xl rotate-3 group-hover:-rotate-3 transition-transform duration-500 z-30">
                 <span className="text-[10px] font-bold text-white/60 tracking-[0.2em] uppercase">
-                  Available for Work
+                  {t("about.photo.badge")} {/* Translated */}
                 </span>
               </div>
             </motion.div>
@@ -164,15 +174,14 @@ export const About = () => {
             </h3>
             <div className="flex flex-wrap gap-2.5">
               {[
+                "TypeScript",
+                "React/Next.js",
+                "Express.js",
                 "Golang",
                 "Fiber/GORM",
-                "React/Next.js",
-                "TypeScript",
-                "Three.js",
-                "Framer Motion",
-                "MySQL",
-                "Clean Architecture",
-                "JWT",
+                "PHP",
+                "Laravel",
+                "MySQL/PostgreSQL",
               ].map((tech) => (
                 <span
                   key={tech}

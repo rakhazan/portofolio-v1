@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu01Icon, Cancel01Icon } from "hugeicons-react";
+import { Menu01Icon, Cancel01Icon, Globe02Icon } from "hugeicons-react";
 import { cn } from "../lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
+import { useTranslation } from "react-i18next";
 
 interface NavbarProps {
   activeSection: string;
@@ -18,6 +19,7 @@ export const Navbar = ({
   setIsMenuOpen,
 }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +30,11 @@ export const Navbar = ({
   }, []);
 
   const navLinks = ["home", "about", "projects", "contact"];
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === "en" ? "id" : "en";
+    i18n.changeLanguage(newLang);
+  };
 
   return (
     <>
@@ -60,7 +67,7 @@ export const Navbar = ({
                   activeSection === item ? "text-accent" : "text-white/60",
                 )}
               >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
+                {t(`nav.${item}`)}
                 <span
                   className={cn(
                     "absolute -bottom-1 left-0 h-[2px] bg-accent transition-all duration-300",
@@ -74,6 +81,22 @@ export const Navbar = ({
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Language Switcher */}
+            <button
+              onClick={toggleLanguage}
+              className="p-2 rounded-full hover:bg-white/5 transition-colors text-white/60 hover:text-accent flex items-center gap-1.5"
+              title={
+                i18n.language === "en"
+                  ? "Switch to Bahasa"
+                  : "Switch to English"
+              }
+            >
+              <Globe02Icon size={20} />
+              <span className="text-[10px] font-bold uppercase tracking-widest hidden sm:inline">
+                {i18n.language.toUpperCase()}
+              </span>
+            </button>
+
             <ThemeToggle />
 
             {/* Mobile Toggle */}
@@ -122,7 +145,7 @@ export const Navbar = ({
                       : "text-white/20 hover:text-white",
                   )}
                 >
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                  {t(`nav.${item}`)}
                   <span className="text-accent opacity-0 group-hover:opacity-100">
                     .
                   </span>

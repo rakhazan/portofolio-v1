@@ -2,59 +2,47 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight01Icon, GithubIcon, Linkedin01Icon } from "hugeicons-react";
 import { cn } from "../lib/utils";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { HeroVisual } from "./HeroVisual";
 
 const SECTION_PADDING = "px-6 py-20 md:px-20 lg:px-40";
 
-const HERO_VARIANTS = [
-  {
-    heading: (
-      <>
-        Transforming bold visions into{" "}
-        <span className="accent-gradient font-extrabold">digital reality</span>.
-      </>
-    ),
-    subtext:
-      "I'm a creator and problem-solver dedicated to building digital spaces that people love to inhabit. From a spark of an idea to a polished experience, I make things work beautifully.",
-  },
-  {
-    heading: (
-      <>
-        Building the future of{" "}
-        <span className="accent-gradient font-extrabold">
-          digital connection
-        </span>
-        .
-      </>
-    ),
-    subtext:
-      "I believe technology should be felt, not just used. I focus on the people behind the product, crafting experiences that resonate, inspire, and simply work.",
-  },
-  {
-    heading: (
-      <>
-        Turning complex puzzles into{" "}
-        <span className="accent-gradient font-extrabold">
-          elegant digital stories
-        </span>
-        .
-      </>
-    ),
-    subtext:
-      "I merge creativity with logic to build spaces that feel like home for your ideas. Dedicated to creating seamless experiences that bridge the gap between imagination and reality.",
-  },
-];
-
-import { HeroVisual } from "./HeroVisual";
-
 export const Hero = () => {
   const [index, setIndex] = useState(0);
+  const { t } = useTranslation();
+
+  interface HeroVariant {
+    heading: string;
+    subtext: string;
+  }
+
+  const HERO_VARIANTS = (
+    t("hero.variants", { returnObjects: true }) as HeroVariant[]
+  ).map((v, i) => ({
+    heading: (
+      <>
+        {v.heading.split("digital")[0]}
+        <span className="accent-gradient font-extrabold">
+          {i === 0
+            ? "digital reality"
+            : i === 1
+              ? "digital connection"
+              : "digital stories"}
+        </span>
+        {v.heading.split(
+          i === 0 ? "reality" : i === 1 ? "connection" : "stories",
+        )[1] || "."}
+      </>
+    ),
+    subtext: v.subtext,
+  }));
 
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % HERO_VARIANTS.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [HERO_VARIANTS.length]);
 
   const current = HERO_VARIANTS[index];
 
@@ -78,7 +66,7 @@ export const Hero = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
             </span>
-            Available for Freelance
+            {t("hero.badge")}
           </div>
 
           <div className="min-h-[200px] md:min-h-[280px] flex flex-col justify-end">
@@ -117,17 +105,17 @@ export const Hero = () => {
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-white text-black font-semibold rounded-full flex items-center gap-2 transition-all hover:bg-accent hover:text-black shadow-lg shadow-white/5"
             >
-              Explore Projects <ArrowRight01Icon size={20} />
+              {t("hero.explore")} <ArrowRight01Icon size={20} />
             </motion.button>
             <motion.div className="flex gap-4 items-center px-4">
               <a
-                href="#"
+                href="https://github.com/rakhazan"
                 className="p-3 glass-card hover:bg-white/10 transition-colors rounded-full text-white/60 hover:text-white"
               >
                 <GithubIcon size={22} />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/rakha-zahran-nurfirmansyah"
                 className="p-3 glass-card hover:bg-white/10 transition-colors rounded-full text-white/60 hover:text-white"
               >
                 <Linkedin01Icon size={22} />

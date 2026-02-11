@@ -4,6 +4,7 @@ import { Moon02Icon, PaintBrush01Icon, StarsIcon } from "hugeicons-react";
 import { useTheme } from "../context/ThemeContext";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { useTranslation } from "react-i18next";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -11,6 +12,7 @@ function cn(...inputs: ClassValue[]) {
 
 export const ThemeToggle: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation();
 
   const getIcon = () => {
     switch (theme) {
@@ -31,7 +33,7 @@ export const ThemeToggle: React.FC = () => {
         "bg-white/5 hover:bg-white/10 border border-white/10",
         "group flex items-center justify-center overflow-hidden w-10 h-10",
       )}
-      aria-label="Toggle Theme"
+      aria-label={t("common.toggleTheme")}
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
