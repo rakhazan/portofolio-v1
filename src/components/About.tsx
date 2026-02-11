@@ -89,7 +89,7 @@ export const About = () => {
               {" "}
               {/* Updated classes */}
               <span className="text-3xl font-bold text-white block mb-1">
-                10+
+                50+
               </span>
               <span className="text-xs text-white/40 uppercase tracking-widest leading-relaxed">
                 {t("about.stats.projects")} {/* Translated */}
