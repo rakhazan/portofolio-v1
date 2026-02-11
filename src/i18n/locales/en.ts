@@ -127,6 +127,11 @@ export const en = {
     },
     common: {
       toggleTheme: "Toggle Theme",
+      seo: {
+        title: "Rakha Zahran — Web Fullstack Developer",
+        description:
+          "Portfolio of Rakha Zahran, a Web Fullstack Developer specializing in Go and Next.js. Building scalable systems and immersive digital experiences.",
+      },
     },
   },
 };

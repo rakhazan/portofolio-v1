@@ -4,6 +4,7 @@ import { Menu01Icon, Cancel01Icon, Globe02Icon } from "hugeicons-react";
 import { cn } from "../lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 import { useTranslation } from "react-i18next";
+import { Logo } from "./Logo";
 
 interface NavbarProps {
   activeSection: string;
@@ -49,10 +50,10 @@ export const Navbar = ({
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-xl font-bold tracking-tighter cursor-pointer"
+          className="text-xl font-bold tracking-tighter cursor-pointer flex items-center gap-3"
           onClick={() => setActiveSection("home")}
         >
-          RZ<span className="text-accent">.</span>
+          <Logo size={28} className="text-accent" />
         </motion.div>
 
         <div className="flex items-center gap-4">
